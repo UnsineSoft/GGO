@@ -389,8 +389,13 @@ void Monster::updateTargetList()
 			++targetIterator;
 		}
 	}
-
-	for (Creature* spectator : g_game.getSpectators(getPosition())) {
+	std::shared_ptr<SpectatorVec> p(new SpectatorVec());
+	spectatorCache[centerPos] = p;
+	SpectatorVec& list = *p;
+	getSpectatorsInternal(list, getPosition(), minRangeX, maxRangeX, minRangeY, maxRangeY, minRangeZ, maxRangeZ, false);
+	getSpectators(list, getPosition(), true, false, mType->viewDistance, mType->viewDistance, mType->viewDistance, mType->viewDistance)
+	
+	for (Creature* spectator : list) {
 		if (spectator != this && canSee(spectator->getPosition())) {
 			onCreatureFound(spectator);
 		}

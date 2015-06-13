@@ -56,6 +56,7 @@ void MonsterType::reset()
 	staticAttackChance = 95;
 	maxSummons = 0;
 	targetDistance = 1;
+	viewDistance = maxViewportX;
 	runAwayHealth = 0;
 	pushable = true;
 	baseSpeed = 200;
@@ -876,6 +877,8 @@ bool Monsters::loadMonster(const std::string& file, const std::string& monster_n
 				mType->lightColor = pugi::cast<uint16_t>(attr.value());
 			} else if (strcasecmp(attrName, "targetdistance") == 0) {
 				mType->targetDistance = std::max<int32_t>(1, pugi::cast<int32_t>(attr.value()));
+			} else if (strcasecmp(attrName, "viewdistance") == 0) {
+				mType->viewdistance = std::max<int32_t>(1, pugi::cast<int32_t>(attr.value()));
 			} else if (strcasecmp(attrName, "runonhealth") == 0) {
 				mType->runAwayHealth = pugi::cast<int32_t>(attr.value());
 			} else if (strcasecmp(attrName, "hidehealth") == 0) {
